@@ -14,7 +14,7 @@ b. extract the features
 c. generate tests
 
 the response model must be similar to that of the @fastapi_app.py .
-use the CURSOR_API_KEY=key_36f1264ffb462763e2493c74e7baa33df4fab491e588be103f0c43d92ecbb62e
+use the CURSOR_API_KEY=key_xxx
 
 
 
