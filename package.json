@@ -1,0 +1,27 @@
+{
+  "name": "cosmote-ai-be-cursor",
+  "version": "1.0.0",
+  "description": "Node.js backend service for document processing with cursor-agent integration",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon --legacy-watch server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["nodejs", "express", "cursor-agent", "document-processing"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "cors": "^2.8.5",
+    "pdf-parse": "^1.1.1",
+    "mammoth": "^1.6.0",
+    "fs-extra": "^11.1.1",
+    "path": "^0.12.7",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
