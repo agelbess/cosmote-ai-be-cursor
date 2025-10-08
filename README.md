@@ -1,0 +1,1 @@
+# cosmote-ai-be-cursor
