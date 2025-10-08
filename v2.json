@@ -1,0 +1,417 @@
+{
+    "features": [
+        {
+            "feature_id": "001",
+            "title": "Customer Data Retrieval API",
+            "status": "To be approved",
+            "summary": "API endpoint to retrieve customer information from the database",
+            "description": "The GET /api/customer endpoint provides functionality to retrieve all customer records from the database. This feature enables access to customer data including customer ID, name, and age. The system interacts with the database to fetch customer information and returns it in a structured format. This is a read-only operation that supports customer data management and reporting requirements.",
+            "priority": "High",
+            "issue_type": "Story",
+            "use_cases": [
+                {
+                    "use_case_id": "001.1",
+                    "title": "Retrieve All Customers",
+                    "actor": "API Consumer, Database System",
+                    "preconditions": "Database is accessible and contains customer data, API service is running",
+                    "main_flow": [
+                        "Step 1: API consumer sends GET request to /api/customer endpoint",
+                        "Step 2: System validates the request format and authentication",
+                        "Step 3: System queries the database to retrieve all customer records",
+                        "Step 4: Database returns customer data including id, name, and age",
+                        "Step 5: System formats the response and returns customer data to the consumer"
+                    ],
+                    "postconditions": "Customer data is successfully retrieved and returned to the API consumer",
+                    "alternate_flows": "If database is unavailable, return 500 error. If no customers exist, return empty array. If authentication fails, return 401 error.",
+                    "test_data": [
+                        {
+                            "data_type": "id",
+                            "value": "1"
+                        },
+                        {
+                            "data_type": "name",
+                            "value": "Alex"
+                        },
+                        {
+                            "data_type": "age",
+                            "value": "47"
+                        }
+                    ]
+                }
+            ],
+            "comments": "This is a core API endpoint for customer data access",
+            "feature_name": "Customer Data Retrieval API",
+            "feature_description": "The GET /api/customer endpoint provides functionality to retrieve all customer records from the database. This feature enables access to customer data including customer ID, name, and age. The system interacts with the database to fetch customer information and returns it in a structured format. This is a read-only operation that supports customer data management and reporting requirements."
+        },
+        {
+            "feature_id": "002",
+            "title": "Invoice Data Retrieval API",
+            "status": "To be approved",
+            "summary": "API endpoint to retrieve invoice information from the database",
+            "description": "The GET /api/invoices endpoint provides functionality to retrieve all invoice records from the database. This feature enables access to invoice data including invoice ID, amount, and associated customer ID. The system interacts with the database to fetch invoice information and returns it in a structured format. This is a read-only operation that supports invoice management and financial reporting requirements.",
+            "priority": "High",
+            "issue_type": "Story",
+            "use_cases": [
+                {
+                    "use_case_id": "002.1",
+                    "title": "Retrieve All Invoices",
+                    "actor": "API Consumer, Database System",
+                    "preconditions": "Database is accessible and contains invoice data, API service is running",
+                    "main_flow": [
+                        "Step 1: API consumer sends GET request to /api/invoices endpoint",
+                        "Step 2: System validates the request format and authentication",
+                        "Step 3: System queries the database to retrieve all invoice records",
+                        "Step 4: Database returns invoice data including id, amount, and customerId",
+                        "Step 5: System formats the response and returns invoice data to the consumer"
+                    ],
+                    "postconditions": "Invoice data is successfully retrieved and returned to the API consumer",
+                    "alternate_flows": "If database is unavailable, return 500 error. If no invoices exist, return empty array. If authentication fails, return 401 error.",
+                    "test_data": [
+                        {
+                            "data_type": "id",
+                            "value": "1"
+                        },
+                        {
+                            "data_type": "amount",
+                            "value": "100$"
+                        },
+                        {
+                            "data_type": "customerId",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "comments": "This is a core API endpoint for invoice data access",
+            "feature_name": "Invoice Data Retrieval API",
+            "feature_description": "The GET /api/invoices endpoint provides functionality to retrieve all invoice records from the database. This feature enables access to invoice data including invoice ID, amount, and associated customer ID. The system interacts with the database to fetch invoice information and returns it in a structured format. This is a read-only operation that supports invoice management and financial reporting requirements."
+        }
+    ],
+    "manual_tests": [
+        {
+            "manual_test_id": "001",
+            "use_case_id": "001.1",
+            "test_name": "Verify Customer API Returns All Customers Successfully",
+            "feature_name": "Customer Data Retrieval API",
+            "use_case_name": "Retrieve All Customers",
+            "status": "To be approved",
+            "description": "Test the GET /api/customer endpoint to verify it returns all customer records from the database with correct data structure and values",
+            "priority": "High",
+            "test_type": "Functional",
+            "preconditions": "Database contains customer records, API service is running and accessible",
+            "steps": [
+                {
+                    "test_step_id": "001.1",
+                    "title": "Send GET request to /api/customer endpoint",
+                    "expected_result": "HTTP 200 status code returned",
+                    "test_data": [
+                        {
+                            "data_type": "endpoint",
+                            "value": "/api/customer"
+                        },
+                        {
+                            "data_type": "method",
+                            "value": "GET"
+                        }
+                    ]
+                },
+                {
+                    "test_step_id": "001.2",
+                    "title": "Verify response contains customer data array",
+                    "expected_result": "Response body contains array of customer objects",
+                    "test_data": [
+                        {
+                            "data_type": "response_format",
+                            "value": "JSON array"
+                        }
+                    ]
+                },
+                {
+                    "test_step_id": "001.3",
+                    "title": "Validate customer object structure",
+                    "expected_result": "Each customer object contains id, name, and age fields",
+                    "test_data": [
+                        {
+                            "data_type": "id",
+                            "value": "1"
+                        },
+                        {
+                            "data_type": "name",
+                            "value": "Alex"
+                        },
+                        {
+                            "data_type": "age",
+                            "value": "47"
+                        }
+                    ]
+                }
+            ],
+            "postconditions": "All customer data is successfully retrieved and displayed",
+            "pass_fail_criteria": "Test passes if HTTP 200 is returned and response contains valid customer data with correct structure",
+            "dependency_with": "None",
+            "e2e": "y",
+            "core": "y",
+            "triggering_system": "API",
+            "comments": "This is a core functional test for customer data retrieval"
+        },
+        {
+            "manual_test_id": "002",
+            "use_case_id": "001.1",
+            "test_name": "Verify Customer API Handles Empty Database",
+            "feature_name": "Customer Data Retrieval API",
+            "use_case_name": "Retrieve All Customers",
+            "status": "To be approved",
+            "description": "Test the GET /api/customer endpoint when database contains no customer records",
+            "priority": "Medium",
+            "test_type": "Functional",
+            "preconditions": "Database is empty or contains no customer records, API service is running",
+            "steps": [
+                {
+                    "test_step_id": "002.1",
+                    "title": "Send GET request to /api/customer endpoint",
+                    "expected_result": "HTTP 200 status code returned",
+                    "test_data": [
+                        {
+                            "data_type": "endpoint",
+                            "value": "/api/customer"
+                        },
+                        {
+                            "data_type": "method",
+                            "value": "GET"
+                        }
+                    ]
+                },
+                {
+                    "test_step_id": "002.2",
+                    "title": "Verify response contains empty array",
+                    "expected_result": "Response body contains empty array []",
+                    "test_data": [
+                        {
+                            "data_type": "response_format",
+                            "value": "[]"
+                        }
+                    ]
+                }
+            ],
+            "postconditions": "Empty array is returned indicating no customers exist",
+            "pass_fail_criteria": "Test passes if HTTP 200 is returned and response contains empty array",
+            "dependency_with": "None",
+            "e2e": "n",
+            "core": "n",
+            "triggering_system": "API",
+            "comments": "Edge case test for empty database scenario"
+        },
+        {
+            "manual_test_id": "003",
+            "use_case_id": "001.1",
+            "test_name": "Verify Customer API Handles Database Connection Error",
+            "feature_name": "Customer Data Retrieval API",
+            "use_case_name": "Retrieve All Customers",
+            "status": "To be approved",
+            "description": "Test the GET /api/customer endpoint when database is unavailable or connection fails",
+            "priority": "High",
+            "test_type": "Functional",
+            "preconditions": "Database is unavailable or connection is down, API service is running",
+            "steps": [
+                {
+                    "test_step_id": "003.1",
+                    "title": "Send GET request to /api/customer endpoint",
+                    "expected_result": "HTTP 500 status code returned",
+                    "test_data": [
+                        {
+                            "data_type": "endpoint",
+                            "value": "/api/customer"
+                        },
+                        {
+                            "data_type": "method",
+                            "value": "GET"
+                        }
+                    ]
+                },
+                {
+                    "test_step_id": "003.2",
+                    "title": "Verify error response contains appropriate message",
+                    "expected_result": "Response body contains error message indicating database connection issue",
+                    "test_data": [
+                        {
+                            "data_type": "error_message",
+                            "value": "Database connection error"
+                        }
+                    ]
+                }
+            ],
+            "postconditions": "Error response is returned indicating database connectivity issue",
+            "pass_fail_criteria": "Test passes if HTTP 500 is returned with appropriate error message",
+            "dependency_with": "None",
+            "e2e": "n",
+            "core": "n",
+            "triggering_system": "API",
+            "comments": "Error handling test for database connectivity issues"
+        },
+        {
+            "manual_test_id": "004",
+            "use_case_id": "002.1",
+            "test_name": "Verify Invoice API Returns All Invoices Successfully",
+            "feature_name": "Invoice Data Retrieval API",
+            "use_case_name": "Retrieve All Invoices",
+            "status": "To be approved",
+            "description": "Test the GET /api/invoices endpoint to verify it returns all invoice records from the database with correct data structure and values",
+            "priority": "High",
+            "test_type": "Functional",
+            "preconditions": "Database contains invoice records, API service is running and accessible",
+            "steps": [
+                {
+                    "test_step_id": "004.1",
+                    "title": "Send GET request to /api/invoices endpoint",
+                    "expected_result": "HTTP 200 status code returned",
+                    "test_data": [
+                        {
+                            "data_type": "endpoint",
+                            "value": "/api/invoices"
+                        },
+                        {
+                            "data_type": "method",
+                            "value": "GET"
+                        }
+                    ]
+                },
+                {
+                    "test_step_id": "004.2",
+                    "title": "Verify response contains invoice data array",
+                    "expected_result": "Response body contains array of invoice objects",
+                    "test_data": [
+                        {
+                            "data_type": "response_format",
+                            "value": "JSON array"
+                        }
+                    ]
+                },
+                {
+                    "test_step_id": "004.3",
+                    "title": "Validate invoice object structure",
+                    "expected_result": "Each invoice object contains id, amount, and customerId fields",
+                    "test_data": [
+                        {
+                            "data_type": "id",
+                            "value": "1"
+                        },
+                        {
+                            "data_type": "amount",
+                            "value": "100$"
+                        },
+                        {
+                            "data_type": "customerId",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "postconditions": "All invoice data is successfully retrieved and displayed",
+            "pass_fail_criteria": "Test passes if HTTP 200 is returned and response contains valid invoice data with correct structure",
+            "dependency_with": "None",
+            "e2e": "y",
+            "core": "y",
+            "triggering_system": "API",
+            "comments": "This is a core functional test for invoice data retrieval"
+        },
+        {
+            "manual_test_id": "005",
+            "use_case_id": "002.1",
+            "test_name": "Verify Invoice API Handles Empty Database",
+            "feature_name": "Invoice Data Retrieval API",
+            "use_case_name": "Retrieve All Invoices",
+            "status": "To be approved",
+            "description": "Test the GET /api/invoices endpoint when database contains no invoice records",
+            "priority": "Medium",
+            "test_type": "Functional",
+            "preconditions": "Database is empty or contains no invoice records, API service is running",
+            "steps": [
+                {
+                    "test_step_id": "005.1",
+                    "title": "Send GET request to /api/invoices endpoint",
+                    "expected_result": "HTTP 200 status code returned",
+                    "test_data": [
+                        {
+                            "data_type": "endpoint",
+                            "value": "/api/invoices"
+                        },
+                        {
+                            "data_type": "method",
+                            "value": "GET"
+                        }
+                    ]
+                },
+                {
+                    "test_step_id": "005.2",
+                    "title": "Verify response contains empty array",
+                    "expected_result": "Response body contains empty array []",
+                    "test_data": [
+                        {
+                            "data_type": "response_format",
+                            "value": "[]"
+                        }
+                    ]
+                }
+            ],
+            "postconditions": "Empty array is returned indicating no invoices exist",
+            "pass_fail_criteria": "Test passes if HTTP 200 is returned and response contains empty array",
+            "dependency_with": "None",
+            "e2e": "n",
+            "core": "n",
+            "triggering_system": "API",
+            "comments": "Edge case test for empty database scenario"
+        },
+        {
+            "manual_test_id": "006",
+            "use_case_id": "002.1",
+            "test_name": "Verify Invoice API Handles Database Connection Error",
+            "feature_name": "Invoice Data Retrieval API",
+            "use_case_name": "Retrieve All Invoices",
+            "status": "To be approved",
+            "description": "Test the GET /api/invoices endpoint when database is unavailable or connection fails",
+            "priority": "High",
+            "test_type": "Functional",
+            "preconditions": "Database is unavailable or connection is down, API service is running",
+            "steps": [
+                {
+                    "test_step_id": "006.1",
+                    "title": "Send GET request to /api/invoices endpoint",
+                    "expected_result": "HTTP 500 status code returned",
+                    "test_data": [
+                        {
+                            "data_type": "endpoint",
+                            "value": "/api/invoices"
+                        },
+                        {
+                            "data_type": "method",
+                            "value": "GET"
+                        }
+                    ]
+                },
+                {
+                    "test_step_id": "006.2",
+                    "title": "Verify error response contains appropriate message",
+                    "expected_result": "Response body contains error message indicating database connection issue",
+                    "test_data": [
+                        {
+                            "data_type": "error_message",
+                            "value": "Database connection error"
+                        }
+                    ]
+                }
+            ],
+            "postconditions": "Error response is returned indicating database connectivity issue",
+            "pass_fail_criteria": "Test passes if HTTP 500 is returned with appropriate error message",
+            "dependency_with": "None",
+            "e2e": "n",
+            "core": "n",
+            "triggering_system": "API",
+            "comments": "Error handling test for database connectivity issues"
+        }
+    ],
+    "PipelineReportResponse": {
+        "status": "success",
+        "errors": [],
+        "timestamp": "2025-01-08T10:09:16.528349"
+    }
+}

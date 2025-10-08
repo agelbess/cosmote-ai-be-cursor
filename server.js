@@ -85,39 +85,103 @@ async function extractFileContent(filePath) {
 // Function to call cursor-agent
 function callCursorAgent(fileContent) {
     try {
-        const prompt = `You are an AI assistant specialized in analyzing Functional Specification Documents (FSD). 
+        const prompt = `You are an AI assistant specialized in analyzing Functional Specification Documents (FSD) for telecommunications systems, particularly FTTH (Fiber to the Home) operations and STM/FSM integration.
 
 Please analyze the following document and:
 
-1. Extract all functional features and requirements
-2. Generate comprehensive test cases for the extracted features
+1. Extract all functional features and requirements with detailed use cases
+2. Generate comprehensive manual test cases for the extracted features
 
-Document content:
-${fileContent}
+IMPORTANT GUIDELINES:
+1. Include both happy path and error scenarios
+2. Ensure test data includes relevant field names and values
+3. Make descriptions comprehensive and technically accurate
+4. Provide your analysis in JSON format with the following strict structure, no other text or comments are allowed:
 
-Please provide your analysis in JSON format with the following structure:
+As a response you must use this structure:
 {
   "features": [
     {
-      "id": "feature_1",
+      "feature_id": "001",
       "title": "Feature Title",
-      "description": "Detailed feature description",
-      "category": "functional|non-functional|integration",
-      "priority": "high|medium|low"
+      "status": "To be approved",
+      "summary": "Brief summary of the feature",
+      "description": "Detailed feature description explaining the functionality, system interactions, and business logic",
+      "priority": "High|Medium|Low",
+      "issue_type": "Story|Epic|Task|Bug",
+      "use_cases": [
+        {
+          "use_case_id": "001.1",
+          "title": "Use Case Title",
+          "actor": "Primary actor, Secondary actors, Systems involved",
+          "preconditions": "Conditions that must be met before the use case can start",
+          "main_flow": [
+            "Step 1: Description of what happens",
+            "Step 2: Description of what happens next",
+            "Step 3: Continue with detailed steps"
+          ],
+          "postconditions": "State of the system after successful completion",
+          "alternate_flows": "Description of alternative paths or error handling",
+          "test_data": [
+            {
+              "data_type": "Data field name",
+              "value": "Expected or test value"
+            }
+          ]
+        }
+      ],
+      "comments": "Additional notes or comments",
+      "feature_name": "Feature Name (same as title)",
+      "feature_description": "Same as description field"
     }
   ],
-  "tests": [
+  "manual_tests": [
     {
-      "id": "test_1",
-      "title": "Test Case Title",
-      "description": "Test case description",
-      "type": "functional|integration|unit|performance",
-      "priority": "high|medium|low",
-      "steps": ["Step 1", "Step 2", "Step 3"],
-      "expected_result": "Expected outcome"
+      "manual_test_id": "28",
+      "use_case_id": "012.2",
+      "test_name": "Test Case Name",
+      "feature_name": "Related Feature Name",
+      "use_case_name": "Related Use Case Name",
+      "status": "To be approved",
+      "description": "Detailed test case description explaining what is being tested",
+      "priority": "High|Medium|Low",
+      "test_type": "Functional|Integration|Unit|Performance|Regression",
+      "preconditions": "Conditions that must be met before test execution",
+      "steps": [
+        {
+          "test_step_id": "28.1",
+          "title": "Step title describing the action",
+          "expected_result": "What should happen as a result of this step",
+          "test_data": [
+            {
+              "data_type": "Data field name",
+              "value": "Test value or expected value"
+            }
+          ]
+        }
+      ],
+      "postconditions": "State after test completion",
+      "pass_fail_criteria": "Clear criteria for determining test success or failure",
+      "dependency_with": "Any dependencies on other tests or features",
+      "e2e": "y|n",
+      "core": "y|n",
+      "triggering_system": "System that triggers this test (STM|FSM|COM|GIS|MCV)",
+      "comments": "Additional test notes"
     }
-  ]
-}`;
+  ],
+  "PipelineReportResponse": {
+    "status": "success",
+    "errors": [],
+    "timestamp": "2025-10-08T10:09:16.528349"
+  }
+}
+
+Document content:
+START OF DOCUMENT
+${fileContent}
+END OF DOCUMENT
+`;
+
 
         // Set the CURSOR_API_KEY environment variable
         process.env.CURSOR_API_KEY = 'key_36f1264ffb462763e2493c74e7baa33df4fab491e588be103f0c43d92ecbb62e';
@@ -223,37 +287,7 @@ app.post('/process-upload-v2', upload.single('file'), async (req, res) => {
                 error: "Failed to parse cursor-agent response"
             };
         }
-        
-        const features = parsedResponse.features || [];
-        const tests = parsedResponse.tests || [];
-        
-        // Create response similar to FastAPI structure
-        const response = {
-            features: features,
-            manual_tests: tests,
-            PipelineReportResponse: {
-                status: "success",
-                message: "Pipeline execution completed successfully",
-                stages_completed: ["file_upload", "content_extraction", "feature_extraction", "test_generation"],
-                features_count: features.length,
-                tests_count: tests.length,
-                chunks_count: 1, // Single document
-                features_json_path: null,
-                features_excel_path: null,
-                tests_json_path: null,
-                tests_excel_path: null,
-                saved_files: {},
-                processing_messages: [
-                    `Successfully processed file: ${req.file.originalname}`,
-                    `Extracted ${fileContent.length} characters`,
-                    `Generated ${features.length} features and ${tests.length} tests`
-                ],
-                errors: [],
-                timestamp: new Date().toISOString()
-            }
-        };
-        
-        res.json(response);
+        res.json(parsedResponse);
         
     } catch (error) {
         console.error('🚨 Error processing file:', error.message);

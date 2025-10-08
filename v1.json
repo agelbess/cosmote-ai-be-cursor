@@ -1,0 +1,248 @@
+{
+    "features": [
+        {
+            "feature_id": "001",
+            "title": "Retrieve Customers via API",
+            "status": "To be approved",
+            "summary": "GET /api/customer endpoint returns all customers from the database.",
+            "description": "The application must provide a GET /api/customer endpoint that retrieves and returns the entire list of customers available in the database. Each customer returned must include their id, name, and age fields as per the provided database sample. Consumers of this API should be able to use this endpoint to retrieve up-to-date customer data, and the returned payload must reflect the current state of the customer database. The data types for each field should follow the structure given in the database sample.",
+            "priority": "Medium",
+            "issue_type": "Story",
+            "use_cases": [
+                {
+                    "use_case_id": "001.1",
+                    "title": "Get All Customers",
+                    "actor": "API Consumer (e.g., front-end, third-party service)",
+                    "preconditions": "The system database must contain at least one customer record. API server is running and accessible.",
+                    "main_flow": [
+                        "API consumer sends a GET request to /api/customer.",
+                        "The server queries the customer table in the database for all customer records.",
+                        "The server formats the customer data to include fields: id, name, age.",
+                        "The server sends a 200 OK response containing the list of customers in JSON format."
+                    ],
+                    "postconditions": "The API returns all customer data present in the database.",
+                    "alternate_flows": "If there are no customers in the database, the API returns an empty list with a 200 OK status. If the database connection fails, the API returns an error with an appropriate HTTP status code (e.g., 500).",
+                    "test_data": [
+                        {
+                            "data_type": "Customer ID",
+                            "value": "1"
+                        },
+                        {
+                            "data_type": "Customer Name",
+                            "value": "Alex"
+                        },
+                        {
+                            "data_type": "Customer Age",
+                            "value": "47"
+                        }
+                    ]
+                }
+            ],
+            "comments": "",
+            "feature_name": "Retrieve Customers via API",
+            "feature_description": "The application must provide a GET /api/customer endpoint that retrieves and returns the entire list of customers available in the database. Each customer returned must include their id, name, and age fields as per the provided database sample. Consumers of this API should be able to use this endpoint to retrieve up-to-date customer data, and the returned payload must reflect the current state of the customer database. The data types for each field should follow the structure given in the database sample."
+        },
+        {
+            "feature_id": "002",
+            "title": "Retrieve Invoices via API",
+            "status": "To be approved",
+            "summary": "GET /api/invoices endpoint returns all invoices from the database.",
+            "description": "The application must provide a GET /api/invoices endpoint that retrieves and returns the entire list of invoices available in the database. Each invoice must include the following fields: id, amount, and customerId, as per the sample data provided. This endpoint is used to obtain up-to-date invoice records reflecting the current status of the invoice database. Amount should be returned as a string including currency symbol, and customerId must correspond to the correct customer entry in the database.",
+            "priority": "Medium",
+            "issue_type": "Story",
+            "use_cases": [
+                {
+                    "use_case_id": "002.1",
+                    "title": "Get All Invoices",
+                    "actor": "API Consumer (e.g., front-end, third-party service)",
+                    "preconditions": "The system database must contain at least one invoice record. API server is running and accessible.",
+                    "main_flow": [
+                        "API consumer sends a GET request to /api/invoices.",
+                        "The server queries the invoice table in the database for all invoice records.",
+                        "The server formats the invoice data to include fields: id, amount, customerId.",
+                        "The server sends a 200 OK response containing the list of invoices in JSON format."
+                    ],
+                    "postconditions": "The API returns all invoice data present in the database.",
+                    "alternate_flows": "If there are no invoices in the database, the API returns an empty list with a 200 OK status. If the database connection fails, the API returns an error with an appropriate HTTP status code (e.g., 500).",
+                    "test_data": [
+                        {
+                            "data_type": "Invoice ID",
+                            "value": "1"
+                        },
+                        {
+                            "data_type": "Invoice Amount",
+                            "value": "100$"
+                        },
+                        {
+                            "data_type": "Invoice Customer Id",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "comments": "",
+            "feature_name": "Retrieve Invoices via API",
+            "feature_description": "The application must provide a GET /api/invoices endpoint that retrieves and returns the entire list of invoices available in the database. Each invoice must include the following fields: id, amount, and customerId, as per the sample data provided. This endpoint is used to obtain up-to-date invoice records reflecting the current status of the invoice database. Amount should be returned as a string including currency symbol, and customerId must correspond to the correct customer entry in the database."
+        }
+    ],
+    "manual_tests": [
+        {
+            "manual_test_id": "1",
+            "use_case_id": "001.1",
+            "test_name": "Retrieve All Customers When Customers Exist",
+            "feature_name": "Retrieve Customers via API",
+            "use_case_name": "Get All Customers",
+            "status": "To be approved",
+            "description": "This test ensures that when there is at least one customer record in the database, a GET request to /api/customer returns all customer records, each formatted with the id, name, and age fields as per specification.",
+            "priority": "Medium",
+            "test_type": "Functional",
+            "preconditions": "The system database must contain at least one customer record. API server is running and accessible.",
+            "steps": [
+                {
+                    "test_step_id": "1.1",
+                    "title": "Send GET request to /api/customer",
+                    "expected_result": "Server queries and returns all customer records in JSON format with id, name, and age fields. Receives a 200 OK status. The JSON contains at least the provided sample customer.",
+                    "test_data": [
+                        {
+                            "data_type": "Customer ID",
+                            "value": "1"
+                        },
+                        {
+                            "data_type": "Customer Name",
+                            "value": "Alex"
+                        },
+                        {
+                            "data_type": "Customer Age",
+                            "value": "47"
+                        }
+                    ]
+                }
+            ],
+            "postconditions": "The API returns all customer data present in the database.",
+            "pass_fail_criteria": "Pass: A 200 OK response is received, and the returned JSON array contains all current customers with fields: id, name, age (e.g. {\"id\": 1, \"name\": \"Alex\", \"age\": 47}). Fail: Non-200 status code, missing required fields, or data does not match the database state.",
+            "dependency_with": "None",
+            "e2e": "n",
+            "core": "y",
+            "triggering_system": "",
+            "comments": ""
+        },
+        {
+            "manual_test_id": "2",
+            "use_case_id": "002.1",
+            "test_name": "Verify GET /api/invoices returns all invoices with correct fields and data types",
+            "feature_name": "Retrieve Invoices via API",
+            "use_case_name": "Get All Invoices",
+            "status": "To be approved",
+            "description": "Test that the GET /api/invoices endpoint returns the complete list of invoices available in the database, with each invoice including correct 'id', 'amount', and 'customerId' fields. Checks that returned data matches the structure and sample data provided. Also, confirms correct handling when no invoices exist.",
+            "priority": "Medium",
+            "test_type": "Functional",
+            "preconditions": "The system database must contain at least one invoice record. API server is running and accessible.",
+            "steps": [
+                {
+                    "test_step_id": "2.1",
+                    "title": "Send GET request to /api/invoices",
+                    "expected_result": "Server responds with HTTP 200 OK and a JSON array of invoices.",
+                    "test_data": null
+                },
+                {
+                    "test_step_id": "2.2",
+                    "title": "Verify structure of each invoice entry",
+                    "expected_result": "Each invoice in the response contains 'id', 'amount', and 'customerId' fields.",
+                    "test_data": [
+                        {
+                            "data_type": "Invoice ID",
+                            "value": ""
+                        },
+                        {
+                            "data_type": "Invoice Amount",
+                            "value": ""
+                        },
+                        {
+                            "data_type": "Invoice Customer Id",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "test_step_id": "2.3",
+                    "title": "Validate returned invoice fields match expected example values and formats",
+                    "expected_result": "At least one invoice object has 'id': 1, 'amount': '100$', 'customerId': 1 as per sample data. 'amount' field is a string reflecting currency (e.g., '100$').",
+                    "test_data": [
+                        {
+                            "data_type": "Invoice ID",
+                            "value": "1"
+                        },
+                        {
+                            "data_type": "Invoice Amount",
+                            "value": "100$"
+                        },
+                        {
+                            "data_type": "Invoice Customer Id",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ],
+            "postconditions": "The API returns all invoice data present in the database.",
+            "pass_fail_criteria": "Test passes if HTTP 200 is returned, the response is a JSON array, each invoice includes all required fields, and at least one entry matches the provided sample values and structure. Test fails otherwise.",
+            "dependency_with": "None",
+            "e2e": "n",
+            "core": "y",
+            "triggering_system": "",
+            "comments": ""
+        }
+    ],
+    "PipelineReportResponse": {
+        "status": "success",
+        "message": "Pipeline execution completed successfully",
+        "stages_completed": [
+            "ingestion",
+            "feature_extraction",
+            "test_generation"
+        ],
+        "features_count": 2,
+        "tests_count": 2,
+        "chunks_count": 1,
+        "features_json_path": "pipeline_output\\features_20251008_111646.json",
+        "features_excel_path": "pipeline_output\\features_20251008_111646.xlsx",
+        "tests_json_path": "pipeline_output\\tests_20251008_111646.json",
+        "tests_excel_path": "pipeline_output\\tests_20251008_111646.xlsx",
+        "saved_files": {
+            "features_json": "pipeline_output\\features_20251008_111646.json",
+            "tests_json": "pipeline_output\\tests_20251008_111646.json",
+            "features_excel": "pipeline_output\\features_20251008_111646.xlsx",
+            "tests_excel": "pipeline_output\\tests_20251008_111646.xlsx",
+            "features_csv": "pipeline_output\\features_20251008_111646.csv",
+            "tests_csv": "pipeline_output\\tests_20251008_111646.csv"
+        },
+        "processing_messages": [
+            "Loading TXT file...",
+            "File loaded successfully",
+            "Processing content...",
+            "Processing complete - 288 characters",
+            "Using proper format chunker to analyze document (288 chars)...",
+            "Proper format chunker failed: No [main flow] sections found in document",
+            "Falling back to generalized intelligent chunking...",
+            "Fallback method used: topic_based_single_pass",
+            "Fallback chunks created: 1",
+            "Content split into 1 chunks: [288] characters each",
+            "✅ Ingestion completed: 1 chunks, 288 total characters",
+            "Processing 1 chunks",
+            "Chunk 1: Extracted 2 features",
+            "Feature extraction complete: 2 unique features from 1 chunks",
+            "Refining 2 features...",
+            "Feature refinement complete",
+            "✅ Feature extraction completed: 2 unique features from 1 chunks",
+            "Processing features from 1 chunks",
+            "Feature 001: Generated 1 test(s)",
+            "Feature 002: Generated 1 test(s)",
+            "Test generation completed in 5.66 seconds using 2 workers",
+            "Feature-by-feature test generation complete: 2 total tests from 2 features",
+            "Refining 2 test cases...",
+            "Test refinement complete: 2 unique test cases sorted by use_case_id with incremental manual_test_id",
+            "✅ Test generation completed: 2 unique test cases from 1 chunks"
+        ],
+        "errors": [],
+        "timestamp": "2025-10-08T11:16:46.975286"
+    }
+}
